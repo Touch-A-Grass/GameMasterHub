@@ -12,7 +12,11 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="ActiproSoftware.Controls.Avalonia" Version="24.1.0" />
         <PackageReference Include="Avalonia.Browser" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-preview.5.24306.7" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0-preview.5.24306.7" />
+        <PackageReference Include="System.Reactive" Version="6.0.1" />
     </ItemGroup>
 
     <ItemGroup>

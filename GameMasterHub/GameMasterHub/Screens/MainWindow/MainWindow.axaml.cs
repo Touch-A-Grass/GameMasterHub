@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.ReactiveUI;
+using GameMasterHub.Screens.MainView;
 using GameMasterHub.ViewModels;
 using ReactiveUI;
 

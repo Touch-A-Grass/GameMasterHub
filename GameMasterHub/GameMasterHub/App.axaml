@@ -2,10 +2,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:GameMasterHub"
              x:Class="GameMasterHub.App"
+             xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
              
     <Application.Styles>
-        <FluentTheme />
+        <!--<FluentTheme>
+            <FluentTheme.Palettes>
+                ~1~ Palette for Light theme variant @1@
+                <ColorPaletteResources x:Key="Light" Accent="Green" RegionColor="White" ErrorText="Red" />
+                ~1~ Palette for Dark theme variant @1@
+                <ColorPaletteResources x:Key="Dark" Accent="DarkGreen" RegionColor="Black" ErrorText="Yellow" />
+            </FluentTheme.Palettes>
+        </FluentTheme>-->
+        <actipro:ModernTheme />
     </Application.Styles>
 </Application>
