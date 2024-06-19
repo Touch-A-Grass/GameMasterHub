@@ -12,10 +12,10 @@
         Title="GameMasterHub"
         x:DataType="mainView:MainViewModel">
     <DockPanel>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+        <!--<StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Button Content="Home" Command="{Binding ClickedNavigateToHome}" Margin="5"/>
             <Button Content="Auth" Command="{Binding ClickedNavigateToAuth}" Margin="5"/>
-        </StackPanel>
+        </StackPanel>-->
         <ContentControl>
             <reactiveUi:RoutedViewHost Router="{Binding Router}" >
                 <reactiveUi:RoutedViewHost.ViewLocator>

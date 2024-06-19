@@ -3,21 +3,39 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:GameMasterHub.ViewModels;assembly=GameMasterHub"
+             xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
+             xmlns:progRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
              xmlns:auth="clr-namespace:GameMasterHub.Screens.Auth"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GameMasterHub.Screens.Auth.AuthView"
              x:DataType="auth:AuthViewModel">
 
-    <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Username:"/>
-            <TextBox x:Name="UsernameTextBox" Text="{Binding Username, Mode=TwoWay}"/>
-
-            <TextBlock Text="Password:"/>
-            <TextBox x:Name="PasswordTextBox" PasswordChar="*" Text="{Binding Password, Mode=TwoWay}"/>
-
-            <Button Classes="theme-solid accent" Click="LoginClickHandler">Login</Button>
-            <Button Classes="theme-outline accent" Click="RegisterClickHandler">Register</Button>
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <!-- Username -->
+        <StackPanel Orientation="Horizontal" Margin="0,10" IsVisible="{Binding !IsLoading}">
+            <TextBlock Width="100" Text="Имя пользователя:" />
+            <TextBox x:Name="UsernameTextBox" Text="{Binding Username, Mode=TwoWay}" Width="200" Margin="5,0" />
         </StackPanel>
-    </Grid>
+
+        <!-- Password -->
+        <StackPanel Orientation="Horizontal" Margin="0,10" IsVisible="{Binding !IsLoading}">
+            <TextBlock Width="100" Text="Пароль:" />
+            <TextBox x:Name="PasswordTextBox" PasswordChar="*" Text="{Binding Password, Mode=TwoWay}" Width="200"
+                     Margin="5,0" />
+        </StackPanel>
+
+        <!-- Buttons -->
+        <StackPanel Orientation="Horizontal" Margin="0,20" IsVisible="{Binding !IsLoading}">
+            <Button Classes="theme-solid accent" Click="LoginClickHandler" Margin="5">Войти</Button>
+            <Button Classes="theme-outline accent" Click="RegisterClickHandler" Margin="5">Регистрация</Button>
+        </StackPanel>
+
+        <!-- Progress -->
+        <progRing:ProgressRing Width="80"
+                               Height="80"
+                               IsActive="{Binding IsLoading}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="{actipro:ThemeResource ControlBackgroundBrushSolidAccent}" />
+    </StackPanel>
 </UserControl>

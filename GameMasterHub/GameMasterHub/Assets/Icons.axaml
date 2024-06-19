@@ -1,0 +1,8 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style>
+        <Style.Resources>
+            <Path x:Key="HomeIcon" Data="GameMasterHub/Assets/home_24dp_FILL0_wght400_GRAD0_opsz24.svg" Fill="Black"></Path>
+        </Style.Resources>
+    </Style>
+</Styles>

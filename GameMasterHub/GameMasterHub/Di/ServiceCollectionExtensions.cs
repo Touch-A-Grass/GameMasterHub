@@ -1,6 +1,7 @@
 using GameMasterHub.Infrastructure.Repositories;
 using GameMasterHub.Infrastructure.Storage;
 using GameMasterHub.Screens.Auth;
+using GameMasterHub.Screens.CreateLobby;
 using GameMasterHub.Screens.Home;
 using GameMasterHub.Screens.MainView;
 using GameMasterHub.ViewModels;
@@ -20,6 +21,7 @@ namespace GameMasterHub.Di
             collection.AddTransient<AuthViewModel>();
             collection.AddTransient<HomeViewModel>();
             collection.AddTransient<MainViewModel>();
+            collection.AddTransient<CreateLobbyViewModel>();
         }
     }
 }

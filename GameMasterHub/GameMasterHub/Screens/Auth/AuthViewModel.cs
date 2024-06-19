@@ -14,6 +14,13 @@ namespace GameMasterHub.Screens.Auth
         public string? UrlPathSegment => "auth";
         public IScreen HostScreen { get; } = screen;
 
+        private bool _isLoading = false;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set => this.RaiseAndSetIfChanged(ref _isLoading, value);
+        }
+
         private string _username = "";
         public string Username
         {
@@ -30,12 +37,16 @@ namespace GameMasterHub.Screens.Auth
 
         async public void Login()
         {
+            IsLoading = true;
             await _authRepository.LoginAsync(_username, _password);
+            IsLoading = false;
         }
 
         async public void Register()
         {
+            IsLoading = true;
             await _authRepository.RegisterAsync(_username, _password);
+            IsLoading = false;
         }
     }
 }

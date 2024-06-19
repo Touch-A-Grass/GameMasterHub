@@ -15,12 +15,8 @@ namespace GameMasterHub.Infrastructure.Repositories
         private readonly TokenStorage _tokenStorage = tokenStorage;
 
         async public Task LoginAsync(string username, string password)
-        {
-            
-            _tokenStorage.Set("123");
-            await Task.Delay(2000);
-            _tokenStorage.Set(null);
-            return;
+        {   
+            // _tokenStorage.Set("123");
             try
             {
                 var request = new AuthRequest
@@ -44,10 +40,10 @@ namespace GameMasterHub.Infrastructure.Repositories
         
         async public Task RegisterAsync(string username, string password)
         {
-            _tokenStorage.Set("123");
+            /*_tokenStorage.Set("123");
             await Task.Delay(2000);
             _tokenStorage.Set(null);
-            return;
+            return;*/
             try
             {
                 var request = new AuthRequest

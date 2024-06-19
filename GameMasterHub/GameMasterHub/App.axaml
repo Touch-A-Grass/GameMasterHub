@@ -4,17 +4,21 @@
              x:Class="GameMasterHub.App"
              xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
              RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
-             
+    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    <Application.Resources>
+        <local:ViewLocator x:Key="ViewLocator" />
+    </Application.Resources>
+
     <Application.Styles>
-        <!--<FluentTheme>
+        <StyleInclude Source="avares://AvaloniaProgressRing/Styles/ProgressRing.xaml" />
+        <StyleInclude Source="Assets/Icons.axaml"></StyleInclude>
+        <FluentTheme>
             <FluentTheme.Palettes>
-                ~1~ Palette for Light theme variant @1@
+                <!-- Palette for Light theme variant -->
                 <ColorPaletteResources x:Key="Light" Accent="Green" RegionColor="White" ErrorText="Red" />
-                ~1~ Palette for Dark theme variant @1@
+                <!-- Palette for Dark theme variant -->
                 <ColorPaletteResources x:Key="Dark" Accent="DarkGreen" RegionColor="Black" ErrorText="Yellow" />
             </FluentTheme.Palettes>
-        </FluentTheme>-->
-        <actipro:ModernTheme />
+        </FluentTheme>
     </Application.Styles>
 </Application>
