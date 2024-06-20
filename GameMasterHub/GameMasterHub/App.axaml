@@ -3,6 +3,7 @@
              xmlns:local="using:GameMasterHub"
              x:Class="GameMasterHub.App"
              xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
     <Application.Resources>
@@ -11,13 +12,68 @@
 
     <Application.Styles>
         <StyleInclude Source="avares://AvaloniaProgressRing/Styles/ProgressRing.xaml" />
-        <StyleInclude Source="Assets/Icons.axaml"></StyleInclude>
+        <materialIcons:MaterialIconStyles />
         <FluentTheme>
             <FluentTheme.Palettes>
-                <!-- Palette for Light theme variant -->
-                <ColorPaletteResources x:Key="Light" Accent="Green" RegionColor="White" ErrorText="Red" />
-                <!-- Palette for Dark theme variant -->
-                <ColorPaletteResources x:Key="Dark" Accent="DarkGreen" RegionColor="Black" ErrorText="Yellow" />
+                           <!-- Светлая тема -->
+            <ColorPaletteResources x:Key="Light" 
+                                   Accent="#ff0073cf" 
+                                   AltHigh="#ffffff" 
+                                   AltLow="#f0f0f0" 
+                                   AltMedium="#e0e0e0" 
+                                   AltMediumHigh="#d0d0d0" 
+                                   AltMediumLow="#c0c0c0" 
+                                   BaseHigh="#333333" 
+                                   BaseLow="#fafafa" 
+                                   BaseMedium="#a0a0a0" 
+                                   BaseMediumHigh="#707070" 
+                                   BaseMediumLow="#888888" 
+                                   ChromeAltLow="#b0b0b0" 
+                                   ChromeBlackHigh="#000000" 
+                                   ChromeBlackLow="#dcdcdc" 
+                                   ChromeBlackMedium="#9e9e9e" 
+                                   ChromeBlackMediumLow="#757575" 
+                                   ChromeDisabledHigh="#e0e0e0" 
+                                   ChromeDisabledLow="#b0b0b0" 
+                                   ChromeGray="#9e9e9e" 
+                                   ChromeHigh="#dcdcdc" 
+                                   ChromeLow="#ececec" 
+                                   ChromeMedium="#e6e6e6" 
+                                   ChromeMediumLow="#ececec" 
+                                   ChromeWhite="#ffffff" 
+                                   ListLow="#e6e6e6" 
+                                   ListMedium="#dcdcdc" 
+                                   RegionColor="#ffffff" />
+
+            <!-- Темная тема -->
+            <ColorPaletteResources x:Key="Dark" 
+                                   Accent="#ff0073cf" 
+                                   AltHigh="#1c1c1c" 
+                                   AltLow="#262626" 
+                                   AltMedium="#333333" 
+                                   AltMediumHigh="#3d3d3d" 
+                                   AltMediumLow="#474747" 
+                                   BaseHigh="#e0e0e0" 
+                                   BaseLow="#1b1b1b" 
+                                   BaseMedium="#9a9a9a" 
+                                   BaseMediumHigh="#b4b4b4" 
+                                   BaseMediumLow="#676767" 
+                                   ChromeAltLow="#4d4d4d" 
+                                   ChromeBlackHigh="#000000" 
+                                   ChromeBlackLow="#3a3a3a" 
+                                   ChromeBlackMedium="#1e1e1e" 
+                                   ChromeBlackMediumLow="#121212" 
+                                   ChromeDisabledHigh="#2e2e2e" 
+                                   ChromeDisabledLow="#9a9a9a" 
+                                   ChromeGray="#7e7e7e" 
+                                   ChromeHigh="#666666" 
+                                   ChromeLow="#2c2c2c" 
+                                   ChromeMedium="#3d3d3d" 
+                                   ChromeMediumLow="#4a4a4a" 
+                                   ChromeWhite="#ffffff" 
+                                   ListLow="#2c2c2c" 
+                                   ListMedium="#333333" 
+                                   RegionColor="#1c1c1c" />
             </FluentTheme.Palettes>
         </FluentTheme>
     </Application.Styles>

@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using GameMasterHub.Screens.Auth;
 using GameMasterHub.Screens.CreateLobby;
+using GameMasterHub.Screens.CreateTemplateCharacter;
 using GameMasterHub.Screens.Home;
 using GameMasterHub.ViewModels;
 using ReactiveUI;
@@ -16,6 +17,7 @@ public class ViewLocator : IViewLocator
         AuthViewModel context => new AuthView { DataContext = context },
         HomeViewModel context => new HomeView { DataContext = context },
         CreateLobbyViewModel context => new CreateLobbyView {DataContext = context},
+        CreateTemplateCharacterViewModel context => new CreateTemplateCharacterView {DataContext = context},
         _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
     };
 }

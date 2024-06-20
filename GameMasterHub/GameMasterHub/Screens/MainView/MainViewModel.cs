@@ -38,7 +38,7 @@ namespace GameMasterHub.Screens.MainView
         
         private IObservable<IRoutableViewModel> NavigateToHome()
         {
-            return Router.Navigate.Execute(new HomeViewModel(this));
+            return Router.Navigate.Execute(new HomeViewModel(this, _authRepository));
         }
 
         public ReactiveCommand<Unit, IRoutableViewModel> ClickedNavigateToAuth =>

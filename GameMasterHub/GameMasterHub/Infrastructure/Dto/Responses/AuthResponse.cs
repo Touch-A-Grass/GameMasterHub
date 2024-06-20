@@ -1,7 +1,10 @@
+using System.Text.Json.Serialization;
+
 namespace GameMasterHub.Infrastructure.Dto.Responses
 {
     public class AuthResponse
     {
-        public string? Token { get; set; }
+
+        [JsonPropertyName("token")] public string? Token { get; set; }
     }
 }

@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:GameMasterHub.ViewModels;assembly=GameMasterHub"
-             xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
              xmlns:progRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
              xmlns:auth="clr-namespace:GameMasterHub.Screens.Auth"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -36,6 +35,6 @@
                                IsActive="{Binding IsLoading}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
-                               Foreground="{actipro:ThemeResource ControlBackgroundBrushSolidAccent}" />
+                               Foreground="{DynamicResource AccentButtonBackground}" />
     </StackPanel>
 </UserControl>

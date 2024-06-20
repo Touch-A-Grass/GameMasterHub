@@ -15,9 +15,25 @@ namespace GameMasterHub.Screens.Home
             InitializeComponent();
         }
 
-        private void PaneVisiblaChangedClickHandler(object? sender, RoutedEventArgs e)
+        private void PaneVisibleChangedClickHandler(object? sender, RoutedEventArgs e)
         {
             ViewModel.IsPaneOpen = !ViewModel.IsPaneOpen;
+        }
+
+        private void NavigationList_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext is HomeViewModel viewModel && sender is ListBox listBox)
+            {
+                if (listBox.SelectedItem is ListBoxItem selectedItem && selectedItem.Tag is string tag)
+                {
+                    viewModel.SwitchCurrentViewModel(tag);
+                }
+            }
+        }
+
+        private void LogoutClickHandler(object? sender, RoutedEventArgs e)
+        {
+            ViewModel.Logout();
         }
     }
 }

@@ -4,5 +4,5 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GameMasterHub.Screens.CreateLobby.CreateLobbyView">
-    <TextBlock Text="CREATE LOBBY" />
+    <TextBlock Text="Welcome to CREATE LOBBY!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 </UserControl>

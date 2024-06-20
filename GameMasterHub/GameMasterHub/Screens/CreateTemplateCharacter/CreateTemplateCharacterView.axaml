@@ -1,0 +1,85 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:viewModels="clr-namespace:GameMasterHub.Screens.CreateTemplateCharacter"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GameMasterHub.Screens.CreateTemplateCharacter.CreateTemplateCharacterView"
+             DataContext="{x:Type viewModels:CreateTemplateCharacterViewModel}"
+             xmlns:ctc="clr-namespace:GameMasterHub.Screens.CreateTemplateCharacter"
+             x:DataType="ctc:CreateTemplateCharacterViewModel">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header TextBlock -->
+        <TextBlock Text="Create your character template here!" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Grid.Row="0"/>
+        
+        <!-- Input for Character Name -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
+            <TextBlock Text="Character Name:" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding CharacterName}" Width="200" Margin="10"/>
+        </StackPanel>
+        
+        <!-- Columns for Attributes and Skills -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Attributes Column -->
+            <StackPanel Grid.Column="0" Margin="10">
+                <TextBlock Text="Attributes" FontWeight="Bold" Margin="0 0 0 5"/>
+                <ItemsControl ItemsSource="{Binding Attributes}" Margin="0 5">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0 5">
+                                <TextBlock Text="Attribute: " VerticalAlignment="Center"/>
+                                <TextBox Text="{Binding Name, Mode=TwoWay}" Width="200"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button Content="{materialIcons:MaterialIconExt Kind=Add}" Command="{Binding AddAttributeCommand}" Margin="0 10"/>
+            </StackPanel>
+            
+            <!-- Skills Column -->
+            <StackPanel Grid.Column="1" Margin="10">
+                <TextBlock Text="Skills" FontWeight="Bold" Margin="0 0 0 5"/>
+                <ItemsControl ItemsSource="{Binding Skills}" Margin="0 5">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0 5">
+                                <TextBlock Text="Skill: " VerticalAlignment="Center"/>
+                                <TextBox Text="{Binding Name, Mode=TwoWay}" Width="200"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button Content="{materialIcons:MaterialIconExt Kind=Add}" Command="{Binding AddSkillCommand}" Margin="0 10"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Save Button -->
+        <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Grid.Row="3"/>
+    </Grid>
+</UserControl>
