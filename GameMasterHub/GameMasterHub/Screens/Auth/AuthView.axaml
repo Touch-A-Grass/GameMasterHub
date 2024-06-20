@@ -25,8 +25,8 @@
 
         <!-- Buttons -->
         <StackPanel Orientation="Horizontal" Margin="0,20" IsVisible="{Binding !IsLoading}">
-            <Button Classes="theme-solid accent" Click="LoginClickHandler" Margin="5">Войти</Button>
-            <Button Classes="theme-outline accent" Click="RegisterClickHandler" Margin="5">Регистрация</Button>
+            <Button Classes="theme-solid accent" Command="{Binding LoginCommand}" Margin="5">Войти</Button>
+            <Button Classes="theme-outline accent" Command="{Binding RegisterCommand}" Margin="5">Регистрация</Button>
         </StackPanel>
 
         <!-- Progress -->

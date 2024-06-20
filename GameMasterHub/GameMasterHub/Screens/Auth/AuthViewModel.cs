@@ -1,18 +1,19 @@
+using Avalonia.Controls;
 using GameMasterHub.Infrastructure.Repositories;
-using GameMasterHub.Infrastructure.Storage;
-using GameMasterHub.ViewModels;
 using ReactiveUI;
 using System;
 using System.Reactive;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace GameMasterHub.Screens.Auth
 {
-    public class AuthViewModel(IScreen screen, AuthRepository authRepository) : ViewModelBase, IRoutableViewModel
+    public class AuthViewModel : ReactiveObject, IRoutableViewModel
     {
-        private readonly AuthRepository _authRepository = authRepository;
+        private readonly AuthRepository _authRepository;
 
         public string? UrlPathSegment => "auth";
-        public IScreen HostScreen { get; } = screen;
+        public IScreen HostScreen { get; }
 
         private bool _isLoading = false;
         public bool IsLoading
@@ -35,18 +36,49 @@ namespace GameMasterHub.Screens.Auth
             set => this.RaiseAndSetIfChanged(ref _password, value);
         }
 
-        async public void Login()
+        public ReactiveCommand<Unit, Unit> LoginCommand { get; }
+        public ReactiveCommand<Unit, Unit> RegisterCommand { get; }
+
+        public AuthViewModel(IScreen screen, AuthRepository authRepository)
         {
-            IsLoading = true;
-            await _authRepository.LoginAsync(_username, _password);
-            IsLoading = false;
+            _authRepository = authRepository ?? throw new ArgumentNullException(nameof(authRepository));
+            HostScreen = screen ?? throw new ArgumentNullException(nameof(screen));
+
+            var canLogin = this.WhenAnyValue(
+                x => x.IsLoading,
+                x => x.Username,
+                x => x.Password,
+                (isLoading, username, password) => !isLoading && !string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password)
+            );
+
+            LoginCommand = ReactiveCommand.CreateFromTask(Login, canLogin);
+            RegisterCommand = ReactiveCommand.CreateFromTask(Register, canLogin);
         }
 
-        async public void Register()
+        private async Task Login()
         {
-            IsLoading = true;
-            await _authRepository.RegisterAsync(_username, _password);
-            IsLoading = false;
+            try
+            {
+                IsLoading = true;
+                await _authRepository.LoginAsync(Username, Password);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        private async Task Register()
+        {
+            try
+            {
+                IsLoading = true;
+                await _authRepository.RegisterAsync(Username, Password);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
     }
 }

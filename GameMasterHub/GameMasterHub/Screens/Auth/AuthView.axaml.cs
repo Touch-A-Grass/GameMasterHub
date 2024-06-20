@@ -12,16 +12,6 @@ namespace GameMasterHub.Screens.Auth
         {
             InitializeComponent();
         }
-
-        private void LoginClickHandler(object? sender, RoutedEventArgs e)
-        {
-            ViewModel?.Login();
-        }
-
-        private void RegisterClickHandler(object? sender, RoutedEventArgs e)
-        {
-            ViewModel?.Register();
-        }
     }
 }
 

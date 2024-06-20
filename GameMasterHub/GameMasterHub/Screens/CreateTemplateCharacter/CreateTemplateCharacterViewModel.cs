@@ -16,15 +16,15 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
             set => this.RaiseAndSetIfChanged(ref _characterName, value);
         }
 
-        private ObservableCollection<AttributeModel> _attributes;
-        public ObservableCollection<AttributeModel> Attributes
+        private ObservableCollection<AttributeModel>? _attributes;
+        public ObservableCollection<AttributeModel>? Attributes
         {
             get => _attributes;
             set => this.RaiseAndSetIfChanged(ref _attributes, value);
         }
 
-        private ObservableCollection<SkillModel> _skills;
-        public ObservableCollection<SkillModel> Skills
+        private ObservableCollection<SkillModel>? _skills;
+        public ObservableCollection<SkillModel>? Skills
         {
             get => _skills;
             set => this.RaiseAndSetIfChanged(ref _skills, value);
@@ -46,18 +46,18 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
 
         public void Save()
         {
-            Console.WriteLine("Attributes: " + string.Join(", ", Attributes.Select(a => a.Name)));
-            Console.WriteLine("Skills: " + string.Join(", ", Skills.Select(s => s.Name)));
+            Console.WriteLine("Attributes: " + string.Join(", ", Attributes!.Select(a => a.Name)));
+            Console.WriteLine("Skills: " + string.Join(", ", Skills!.Select(s => s.Name)));
         }
 
         private void AddAttribute()
         {
-            Attributes.Add(new AttributeModel());
+            Attributes?.Add(new AttributeModel());
         }
 
         private void AddSkill()
         {
-            Skills.Add(new SkillModel());
+            Skills?.Add(new SkillModel());
         }
     }
 
