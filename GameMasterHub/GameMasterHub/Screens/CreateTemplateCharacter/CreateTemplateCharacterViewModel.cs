@@ -16,15 +16,15 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
             set => this.RaiseAndSetIfChanged(ref _characterName, value);
         }
 
-        private ObservableCollection<AttributeModel>? _attributes;
-        public ObservableCollection<AttributeModel>? Attributes
+        private ObservableCollection<AttributeTemplate>? _attributes;
+        public ObservableCollection<AttributeTemplate>? Attributes
         {
             get => _attributes;
             set => this.RaiseAndSetIfChanged(ref _attributes, value);
         }
 
-        private ObservableCollection<SkillModel>? _skills;
-        public ObservableCollection<SkillModel>? Skills
+        private ObservableCollection<SkillTemplate>? _skills;
+        public ObservableCollection<SkillTemplate>? Skills
         {
             get => _skills;
             set => this.RaiseAndSetIfChanged(ref _skills, value);
@@ -36,8 +36,8 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
 
         public CreateTemplateCharacterViewModel()
         {
-            Attributes = new ObservableCollection<AttributeModel>();
-            Skills = new ObservableCollection<SkillModel>();
+            Attributes = new ObservableCollection<AttributeTemplate>();
+            Skills = new ObservableCollection<SkillTemplate>();
 
             AddAttribute();
             AddSkill();
@@ -55,16 +55,16 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
 
         private void AddAttribute()
         {
-            Attributes?.Add(new AttributeModel());
+            Attributes?.Add(new AttributeTemplate());
         }
 
         private void AddSkill()
         {
-            Skills?.Add(new SkillModel());
+            Skills?.Add(new SkillTemplate());
         }
     }
 
-    public class AttributeModel : ReactiveObject
+    public class AttributeTemplate : ReactiveObject
     {
         private string _name = "";
         public string Name
@@ -74,7 +74,7 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
         }
     }
 
-    public class SkillModel : ReactiveObject
+    public class SkillTemplate : ReactiveObject
     {
         private string _name = "";
         public string Name

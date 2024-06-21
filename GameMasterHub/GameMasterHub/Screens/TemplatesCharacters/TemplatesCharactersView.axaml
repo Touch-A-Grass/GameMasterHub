@@ -1,0 +1,73 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GameMasterHub.Screens.TemplatesCharacters.TemplatesCharactersView"
+             xmlns:tc="clr-namespace:GameMasterHub.Screens.TemplatesCharacters"
+             x:DataType="tc:TemplatesCharactersViewModel">
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header TextBlock -->
+        <TextBlock Text="Explore characters templates"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   FontSize="24" FontWeight="Bold" Margin="0 12 0 0"
+                   Grid.Row="0" />
+
+        <!-- Columns for Attributes and Skills -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" RowDefinitions="*" Margin="10">
+
+                <ScrollViewer Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <ItemsControl ItemsSource="{Binding Templates}" Margin="0 5">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0 5" HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding Name}" Width="400" FontSize="16" />
+                                    <Button Content="Show Details"
+                                            Command="{Binding $parent[ItemsControl].((tc:TemplatesCharactersViewModel)DataContext).ShowDetailsCommand}" Tag="{Binding Id}"
+                                            CommandParameter="{Binding}" Margin="10 5"  />
+
+                                    <Border BorderBrush="Gray" BorderThickness="1" Margin="0 5" Padding="5">
+                                        <StackPanel>
+                                            <TextBlock Text="Attributes:" FontWeight="Bold" />
+                                            <TextBlock Text="{Binding Attributes}" TextWrapping="Wrap" />
+                                            <TextBlock Text="Skills:" FontWeight="Bold" Margin="0 5 0 0" />
+                                            <TextBlock Text="{Binding Skills}" TextWrapping="Wrap" />
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+            </Grid>
+        </Grid>
+
+        <Button Content="{materialIcons:MaterialIconExt Kind=Add}"
+                Command="{Binding NavigateToCreateTemplateCharacterCommand}"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Background="{DynamicResource AccentButtonBackground}" Height="48" Width="48" Margin="10" Grid.Row="3" />
+    </Grid>
+</UserControl>

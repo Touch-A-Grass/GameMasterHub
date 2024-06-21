@@ -11,11 +11,13 @@ namespace GameMasterHub.Screens.MainView
     public class MainViewModel : ReactiveObject, IScreen
     {
         private readonly AuthRepository _authRepository;
+        private readonly TemplateRepository _templateRepository;
         public RoutingState Router { get; } = new RoutingState();
 
-        public MainViewModel(AuthRepository authRepository)
+        public MainViewModel(AuthRepository authRepository, TemplateRepository templateRepository)
         {
             _authRepository = authRepository;
+            _templateRepository = templateRepository;
             Router.Navigate.Execute(new AuthViewModel(this, _authRepository));
             _authRepository.WatchToken().Subscribe(token =>
                 {
@@ -38,7 +40,7 @@ namespace GameMasterHub.Screens.MainView
         
         private IObservable<IRoutableViewModel> NavigateToHome()
         {
-            return Router.Navigate.Execute(new HomeViewModel(this, _authRepository));
+            return Router.Navigate.Execute(new HomeViewModel(this, _authRepository, _templateRepository));
         }
 
         public ReactiveCommand<Unit, IRoutableViewModel> ClickedNavigateToAuth =>

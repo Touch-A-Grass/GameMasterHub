@@ -38,10 +38,10 @@
                         </StackPanel>
                     </ListBoxItem>
 
-                    <ListBoxItem Tag="CreateCharacterTemplate">
+                    <ListBoxItem Tag="TemplatesCharacters">
                         <StackPanel Spacing="17" Orientation="Horizontal">
                             <materialIcons:MaterialIcon Kind="PersonAdd" Width="14" />
-                            <TextBlock Text="Create character template" />
+                            <TextBlock Text="Manage characters templates" />
                         </StackPanel>
                     </ListBoxItem>
 
@@ -66,6 +66,13 @@
                         Height="32"
                         Margin="7 10"
                         DockPanel.Dock="Bottom" />
+                
+                <!-- Кнопка назад, прижата к низу -->
+                <Button Command="{Binding BackCommand}" Content="{materialIcons:MaterialIconExt Kind=ArrowBack}"
+                        Width="32"
+                        Height="32"
+                        Margin="7 10"
+                        DockPanel.Dock="Bottom" IsVisible="{Binding BackButtonVisible}"/>
             </DockPanel>
 
 
