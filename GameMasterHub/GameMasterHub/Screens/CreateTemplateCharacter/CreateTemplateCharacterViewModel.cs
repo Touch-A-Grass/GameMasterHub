@@ -39,6 +39,9 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
             Attributes = new ObservableCollection<AttributeModel>();
             Skills = new ObservableCollection<SkillModel>();
 
+            AddAttribute();
+            AddSkill();
+
             AddAttributeCommand = ReactiveCommand.Create(AddAttribute);
             AddSkillCommand = ReactiveCommand.Create(AddSkill);
             SaveCommand = ReactiveCommand.Create(Save);

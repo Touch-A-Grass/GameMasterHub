@@ -9,77 +9,105 @@
              DataContext="{x:Type viewModels:CreateTemplateCharacterViewModel}"
              xmlns:ctc="clr-namespace:GameMasterHub.Screens.CreateTemplateCharacter"
              x:DataType="ctc:CreateTemplateCharacterViewModel">
-    
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
+
         <!-- Header TextBlock -->
-        <TextBlock Text="Create your character template here!" 
+        <TextBlock Text="Create your character template here!"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Grid.Row="0"/>
+                   FontSize="24" FontWeight="Bold" Margin="0 12 0 0"
+                   Grid.Row="0" />
         
         <!-- Input for Character Name -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
-            <TextBlock Text="Character Name:" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding CharacterName}" Width="200" Margin="10"/>
+            <TextBlock Text="Character Name:" VerticalAlignment="Center" FontSize="16" />
+            <TextBox Text="{Binding CharacterName}" Width="200" Margin="10" FontSize="16" />
         </StackPanel>
-        
+
         <!-- Columns for Attributes and Skills -->
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
+
             <!-- Attributes Column -->
             <StackPanel Grid.Column="0" Margin="10">
-                <TextBlock Text="Attributes" FontWeight="Bold" Margin="0 0 0 5"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Attributes" FontWeight="Bold" FontSize="18" Margin="0 0 0 5"
+                               HorizontalAlignment="Center" Grid.Column="0" />
+                    <Button Content="{materialIcons:MaterialIconExt Kind=Add}" Command="{Binding AddAttributeCommand}"
+                            Margin="0 0 0 5" Height="36" Width="36" HorizontalAlignment="Right" Grid.Column="1" />
+                </Grid>
+                
+                <Border BorderBrush="Gray" BorderThickness="0,0,0,1" Margin="0 0 0 12" />
                 <ItemsControl ItemsSource="{Binding Attributes}" Margin="0 5">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical"/>
+                            <StackPanel Orientation="Vertical" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="0 5">
-                                <TextBlock Text="Attribute: " VerticalAlignment="Center"/>
-                                <TextBox Text="{Binding Name, Mode=TwoWay}" Width="200"/>
+                            <StackPanel Orientation="Horizontal" Margin="0 5" HorizontalAlignment="Center">
+                                <TextBox Text="{Binding Name, Mode=TwoWay}" Width="400" FontSize="16" />
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Button Content="{materialIcons:MaterialIconExt Kind=Add}" Command="{Binding AddAttributeCommand}" Margin="0 10"/>
+                <Button Content="{materialIcons:MaterialIconExt Kind=Add}" Command="{Binding AddAttributeCommand}"
+                        Margin="0 10" HorizontalAlignment="Right" />
             </StackPanel>
-            
+
+            <!-- Vertical Separator Line between Columns -->
+            <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1,0,1,0" Margin="10 0" />
+
             <!-- Skills Column -->
-            <StackPanel Grid.Column="1" Margin="10">
-                <TextBlock Text="Skills" FontWeight="Bold" Margin="0 0 0 5"/>
+            <StackPanel Grid.Column="2" Margin="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Skills" FontWeight="Bold" FontSize="18" Margin="0 0 0 5"
+                               HorizontalAlignment="Center" Grid.Column="0" />
+                    <Button Content="{materialIcons:MaterialIconExt Kind=Add}" Command="{Binding AddSkillCommand}"
+                            Margin="0 0 0 5" Height="36" Width="36" HorizontalAlignment="Right" Grid.Column="1" />
+                </Grid>
+                <Border BorderBrush="Gray" BorderThickness="0,0,0,1" Margin="0 0 0 12" />
                 <ItemsControl ItemsSource="{Binding Skills}" Margin="0 5">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical"/>
+                            <StackPanel Orientation="Vertical" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="0 5">
-                                <TextBlock Text="Skill: " VerticalAlignment="Center"/>
-                                <TextBox Text="{Binding Name, Mode=TwoWay}" Width="200"/>
+                            <StackPanel Orientation="Horizontal" Margin="0 5" HorizontalAlignment="Center">
+                                <TextBox Text="{Binding Name, Mode=TwoWay}" Width="400" FontSize="16" />
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Button Content="{materialIcons:MaterialIconExt Kind=Add}" Command="{Binding AddSkillCommand}" Margin="0 10"/>
+                <Button Content="{materialIcons:MaterialIconExt Kind=Add}" Command="{Binding AddSkillCommand}"
+                        Margin="0 10" HorizontalAlignment="Right" />
             </StackPanel>
         </Grid>
 
         <!-- Save Button -->
-        <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Grid.Row="3"/>
+        <Button Content="{materialIcons:MaterialIconExt Kind=ContentSave}" Command="{Binding SaveCommand}"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Background="{DynamicResource AccentButtonBackground}" Height="48" Width="48" Margin="10" Grid.Row="3" />
     </Grid>
 </UserControl>

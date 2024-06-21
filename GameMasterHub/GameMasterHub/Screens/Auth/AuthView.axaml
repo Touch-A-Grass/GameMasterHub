@@ -29,6 +29,7 @@
             <Button Classes="theme-outline accent" Command="{Binding RegisterCommand}" Margin="5">Регистрация</Button>
         </StackPanel>
 
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <!-- Progress -->
         <progRing:ProgressRing Width="80"
                                Height="80"
@@ -36,5 +37,6 @@
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                Foreground="{DynamicResource AccentButtonBackground}" />
+       </StackPanel>
     </StackPanel>
 </UserControl>
