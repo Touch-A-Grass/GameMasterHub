@@ -38,16 +38,16 @@
                         </StackPanel>
                     </ListBoxItem>
 
-                    <ListBoxItem Tag="TemplatesCharacters">
+                    <ListBoxItem Tag="CreateGame">
                         <StackPanel Spacing="17" Orientation="Horizontal">
-                            <materialIcons:MaterialIcon Kind="PersonAdd" Width="14" />
-                            <TextBlock Text="Manage characters templates" />
+                            <materialIcons:MaterialIcon Kind="Contract" Width="14" />
+                            <TextBlock Text="Create game" />
                         </StackPanel>
                     </ListBoxItem>
 
                     <ListBoxItem>
                         <StackPanel Spacing="17" Orientation="Horizontal">
-                            <materialIcons:MaterialIcon Kind="Contract" Width="14" />
+                            <materialIcons:MaterialIcon Kind="Block" Width="14" />
                             <TextBlock Text="None" />
                         </StackPanel>
                     </ListBoxItem>

@@ -12,7 +12,7 @@ namespace GameMasterHub.Screens.TemplatesCharacters
     public class TemplatesCharactersViewModel : ViewModelBase
     {
         private readonly HomeViewModel? _homeViewModel;
-        private readonly TemplateRepository _templateRepository;
+        private readonly GameRepository _gameRepository;
 
         private ObservableCollection<TemplateCharacterTemplate>? _templates;
         public ObservableCollection<TemplateCharacterTemplate>? Templates
@@ -24,10 +24,10 @@ namespace GameMasterHub.Screens.TemplatesCharacters
         public ReactiveCommand<Unit, Unit> NavigateToCreateTemplateCharacterCommand { get; }
         public ReactiveCommand<TemplateCharacterTemplate, Unit> ShowDetailsCommand { get; set; }
 
-        public TemplatesCharactersViewModel(HomeViewModel homeViewModel, TemplateRepository templateRepository)
+        public TemplatesCharactersViewModel(HomeViewModel homeViewModel, GameRepository gameRepository)
         {
             _homeViewModel = homeViewModel;
-            _templateRepository = templateRepository;
+            _gameRepository = gameRepository;
 
             Templates = new ObservableCollection<TemplateCharacterTemplate>();
 
@@ -39,7 +39,7 @@ namespace GameMasterHub.Screens.TemplatesCharacters
 
         private async void GetTemplatesCharacters()
         {
-            var templates = await _templateRepository.GetTemplatesCharactersAsync();
+            var templates = await _gameRepository.GetTemplatesCharactersAsync();
 
             Templates?.Clear();
 

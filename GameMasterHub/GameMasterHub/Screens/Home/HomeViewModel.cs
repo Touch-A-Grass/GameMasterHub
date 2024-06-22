@@ -1,6 +1,7 @@
 using GameMasterHub.Infrastructure.Managers;
 using GameMasterHub.Infrastructure.Repositories;
 using GameMasterHub.Infrastructure.Storage;
+using GameMasterHub.Screens.CreateGame;
 using GameMasterHub.Screens.CreateLobby;
 using GameMasterHub.Screens.CreateTemplateCharacter;
 using GameMasterHub.Screens.MainView;
@@ -48,16 +49,16 @@ namespace GameMasterHub.Screens.Home
         public ReactiveCommand<Unit, Unit> BackCommand { get; }
 
         private bool _backButtonVisible = false;
-        private readonly TemplateRepository _templateRepository;
+        private readonly GameRepository _gameRepository;
         public bool BackButtonVisible
         {
             get => _backButtonVisible;
             set => this.RaiseAndSetIfChanged(ref _backButtonVisible, value);
         }
 
-        public HomeViewModel(IScreen screen, AuthRepository authRepository, TemplateRepository templateRepository)
+        public HomeViewModel(IScreen screen, AuthRepository authRepository, GameRepository gameRepository)
         {
-            _templateRepository = templateRepository;
+            _gameRepository = gameRepository;
             _authRepository = authRepository;
             SwitchCurrentViewModel("CreateLobby");
 
@@ -74,8 +75,9 @@ namespace GameMasterHub.Screens.Home
                 case "CreateLobby":
                     viewModel = new CreateLobbyViewModel();
                     break;
-                case "TemplatesCharacters":
-                    viewModel = new TemplatesCharactersViewModel(this, _templateRepository);
+                case "CreateGame":
+                    // viewModel = new TemplatesCharactersViewModel(this, _gameRepository);
+                    viewModel = new CreateGameViewModel(this, _gameRepository);
                     break;
                 default:
                     viewModel = new CreateLobbyViewModel();

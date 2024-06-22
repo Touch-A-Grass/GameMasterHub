@@ -2,6 +2,7 @@ using GameMasterHub.Infrastructure.Managers;
 using GameMasterHub.Infrastructure.Repositories;
 using GameMasterHub.Infrastructure.Storage;
 using GameMasterHub.Screens.Auth;
+using GameMasterHub.Screens.CreateGame;
 using GameMasterHub.Screens.CreateLobby;
 using GameMasterHub.Screens.CreateTemplateCharacter;
 using GameMasterHub.Screens.Home;
@@ -24,7 +25,7 @@ namespace GameMasterHub.Di
                 {
                     client.BaseAddress = baseAddress;
                 });
-            collection.AddHttpClient<TemplateRepository>(client =>
+            collection.AddHttpClient<GameRepository>(client =>
                 {
                     client.BaseAddress = baseAddress;
                 });
@@ -33,6 +34,7 @@ namespace GameMasterHub.Di
             collection.AddTransient<HomeViewModel>();
             collection.AddTransient<MainViewModel>();
             collection.AddTransient<CreateLobbyViewModel>();
+            collection.AddTransient<CreateGameViewModel>();
             collection.AddTransient<TemplatesCharactersViewModel>();
             collection.AddTransient<CreateTemplateCharacterViewModel>();
         }

@@ -1,0 +1,56 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GameMasterHub.Screens.CreateGame.CreateGameView"
+             xmlns:cg="clr-namespace:GameMasterHub.Screens.CreateGame"
+             x:DataType="cg:CreateGameViewModel">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Create a New Game"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20" />
+
+        <StackPanel Grid.Row="1" Spacing="10">
+            <TextBlock Text="Game Title" 
+                       FontSize="18"
+                       FontWeight="SemiBold"
+                       Margin="0,0,0,5" />
+
+            <TextBox Text="{Binding GameTitle, Mode=TwoWay}" 
+                     Width="300"
+                     HorizontalAlignment="Left"
+                     FontSize="16"
+                     Padding="5"
+                     Margin="0,0,0,10" />
+
+            <Button Content="Create"
+                    Command="{Binding NavigateToCreateTemplateCharacterCommand}"
+                    FontSize="16"
+                    Background="{DynamicResource AccentButtonBackground}"
+                    Foreground="White"
+                    HorizontalAlignment="Right"
+                    Padding="10,5"
+                    Width="150"
+                    Height="40">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <materialIcons:MaterialIcon Kind="NavigateNext" Width="24" Height="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Create" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

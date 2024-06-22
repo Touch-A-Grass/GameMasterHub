@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace GameMasterHub.Infrastructure.Repositories
 {
-    public class TemplateRepository(HttpClient httpClient)
+    public class GameRepository(HttpClient httpClient)
     {
         private readonly HttpClient _httpClient = httpClient;
 
