@@ -106,6 +106,49 @@ namespace GameMasterHub.Infrastructure.Repositories
             return false;
         }
 
+        public async Task<bool> CreateGame(string gameName)
+        {
+            await Task.Delay(2000);
+            return true;
+            try
+            {
+                var registerRequest = new CreateGameRequest
+                {
+                    Name = gameName
+                };
+                var json = JsonSerializer.Serialize(registerRequest);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync("/game/create/", content);
+                var responseBody = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var createGameResponse = JsonSerializer.Deserialize<CreateGameResponse>(responseBody);
+                    if (createGameResponse != null)
+                    {
+                        _gameStorage.GameId = createGameResponse.Id;
+                        return true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Failed to deserialize the response.");
+                        return false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to create game. Status code: {response.StatusCode}");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+            return false;
+        }
+
         public async Task<List<TemplateCharacterModel>> GetTemplatesCharactersAsync()
         {
             throw new NotImplementedException();

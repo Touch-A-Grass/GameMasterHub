@@ -113,7 +113,8 @@ namespace GameMasterHub.Screens.Home
             var noBackButtonViews = new List<Type>
             {
                 typeof(CreateLobbyViewModel),
-                typeof(TemplatesCharactersViewModel)
+                typeof(CreateGameViewModel),
+                typeof(CreateLobbyViewModel)
             };
 
             BackButtonVisible = _stackViewModels.Count > 1 && !noBackButtonViews.Contains(CurrentView.GetType());

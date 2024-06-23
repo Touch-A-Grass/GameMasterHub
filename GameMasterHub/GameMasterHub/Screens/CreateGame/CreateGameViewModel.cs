@@ -20,6 +20,13 @@ namespace GameMasterHub.Screens.CreateGame
             set => this.RaiseAndSetIfChanged(ref _gameTitle, value);
         }
         
+        private bool _isLoading = false;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set => this.RaiseAndSetIfChanged(ref _isLoading, value);
+        }
+        
         public ReactiveCommand<Unit, Unit> NavigateToCreateTemplateCharacterCommand { get; }
 
 
@@ -34,9 +41,17 @@ namespace GameMasterHub.Screens.CreateGame
             NavigateToCreateTemplateCharacterCommand = ReactiveCommand.Create(NavigateToCreateTemplateCharacter, canContinue);
         }
 
-        private void NavigateToCreateTemplateCharacter()
+        private async void NavigateToCreateTemplateCharacter()
         {
-            _homeViewModel?.NavigateToCreateTemplateCharacter();
+            IsLoading = true;
+            if (await _gameRepository.CreateGame(GameTitle))
+            {
+                _homeViewModel?.NavigateToCreateTemplateCharacter();
+            }
+            else
+            {
+                IsLoading = false;
+            }
         }
     }
 }
