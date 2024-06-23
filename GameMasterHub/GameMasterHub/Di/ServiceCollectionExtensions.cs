@@ -21,6 +21,8 @@ namespace GameMasterHub.Di
             
             collection.AddSingleton<ApplicationDataManager>();
             collection.AddSingleton<TokenStorage>();
+            collection.AddSingleton<GameStorage>();
+            
             collection.AddHttpClient<AuthRepository>(client =>
                 {
                     client.BaseAddress = baseAddress;

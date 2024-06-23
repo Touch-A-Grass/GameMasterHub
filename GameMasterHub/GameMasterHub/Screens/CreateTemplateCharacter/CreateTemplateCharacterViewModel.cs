@@ -1,4 +1,7 @@
 using DynamicData;
+using GameMasterHub.Domain.Models;
+using GameMasterHub.Infrastructure.Repositories;
+using GameMasterHub.Infrastructure.Storage;
 using GameMasterHub.ViewModels;
 using ReactiveUI;
 using System;
@@ -12,7 +15,7 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
 {
     public class CreateTemplateCharacterViewModel : ViewModelBase
     {
-        private string _walletValue = "";
+        private string _walletValue = "0";
         public string WalletValue
         {
             get => _walletValue;
@@ -28,7 +31,7 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
                 if (_attributes != null)
                 {
                     _attributes.CollectionChanged -= AttributesCollectionChanged;
-                    UnsubscribeFromAttributes(_attributes);
+                    UnsubscribeFromAttributes(_attributes); 
                 }
 
                 this.RaiseAndSetIfChanged(ref _attributes, value);
@@ -81,7 +84,6 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
 
         private void UpdateIntAttributesForSkills()
         {
-            // Сохраняем текущий выбор атрибутов для скиллов
             var selectedAttributes = Skills?.ToDictionary(skill => skill, skill => skill.Attribute);
 
             var attributesToAdd = _attributes.Where(a => a.Type == "int" && !_intAttributesForSkills.Contains(a)).ToList();
@@ -97,7 +99,6 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
                 _intAttributesForSkills.Add(attribute);
             }
 
-            // Восстанавливаем выбор атрибутов для скиллов
             if (selectedAttributes != null)
             {
                 foreach (var skill in selectedAttributes.Keys)
@@ -113,6 +114,7 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
                     }
                 }
             }
+            WalletValue = Math.Round(_intAttributesForSkills.Count * 4.5).ToString();
         }
 
         private void SubscribeToAttributes(ObservableCollection<AttributeTemplate> attributes)
@@ -131,8 +133,9 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
             }
         }
 
-        private ObservableCollection<SkillTemplate>? _skills = new ObservableCollection<SkillTemplate>();
-        public ObservableCollection<SkillTemplate>? Skills
+        private ObservableCollection<SkillTemplate> _skills = new ObservableCollection<SkillTemplate>();
+        private readonly GameRepository _gameRepository;
+        public ObservableCollection<SkillTemplate> Skills
         {
             get => _skills;
             set => this.RaiseAndSetIfChanged(ref _skills, value);
@@ -144,8 +147,9 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
         public ReactiveCommand<SkillTemplate, Unit> DeleteSkillCommand { get; }
         public ReactiveCommand<Unit, Unit> SaveCommand { get; }
 
-        public CreateTemplateCharacterViewModel()
+        public CreateTemplateCharacterViewModel(GameRepository gameRepository)
         {
+            _gameRepository = gameRepository;
             AddAttribute();
             AddSkill();
 
@@ -155,13 +159,35 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
             AddSkillCommand = ReactiveCommand.Create(AddSkill);
             DeleteSkillCommand = ReactiveCommand.Create<SkillTemplate>(DeleteSkill);
 
-            SaveCommand = ReactiveCommand.Create(Save);
+            var canSave = this.WhenAnyValue(
+                x => x.Attributes,
+                x => x.Skills,
+                x => x.WalletValue,
+                (attributes, skills, walletValue) =>
+                    attributes.Count > 0 &&
+                    skills.Count > 0 &&
+                    !string.IsNullOrWhiteSpace(walletValue) &&
+                    attributes.All(a => !string.IsNullOrWhiteSpace(a.Name) && !string.IsNullOrWhiteSpace(a.Type)) &&
+                    skills.All(s => !string.IsNullOrWhiteSpace(s.Name) && s.Attribute != null && !string.IsNullOrWhiteSpace(s.Attribute.Name))
+            );
+
+            SaveCommand = ReactiveCommand.Create(Save, canSave);
 
             _attributes.CollectionChanged += AttributesCollectionChanged;
             SubscribeToAttributes(_attributes);
+            
+            _gameRepository.WatchGame().Subscribe(template =>
+                {
+                    if (template.Id is not null)
+                    {
+                        Console.WriteLine("New View");
+                    }
+                });
+
+            UpdateIntAttributesForSkills();
         }
 
-        public void Save()
+        public async void Save()
         {
             Console.WriteLine("Attributes: " + string.Join(", ", Attributes!.Select(a => a.Name)));
             foreach (var attr in IntAttributesForSkills)
@@ -169,6 +195,39 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
                 Console.WriteLine($"Name {attr.Name}, Type {attr.Type}");
             }
             Console.WriteLine("Skills: " + string.Join(", ", Skills!.Select(s => s.Name)));
+
+            TemplateCharacterModel template = new TemplateCharacterModel();
+            template.GameId = _gameRepository.GetGameId();
+            template.AttributesWallet = Convert.ToInt32(WalletValue);
+
+            foreach (var attr in Attributes)
+            {
+                template.Attributes.Add(new AttributeModel()
+                {
+                    Name = attr.Name,
+                    Type = attr.Type
+                });
+            }
+
+            foreach (var skill in Skills)
+            {
+                var attributeModel = template.Attributes.FirstOrDefault(a => a.Name == skill.Attribute.Name);
+                template.Skills.Add(new SkillModel
+                {
+                    Name = skill.Name,
+                    Attribute = attributeModel
+                });
+            }
+
+            if (await _gameRepository.CreateTemplateCharacterAsync(template))
+            {
+                Console.WriteLine("New View");
+                
+            }
+            else
+            {
+                Console.WriteLine("Tilt");
+            }
         }
 
         private void AddAttribute()

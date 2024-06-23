@@ -4,6 +4,7 @@ using GameMasterHub.Infrastructure.Dto.Responses;
 using GameMasterHub.Infrastructure.Storage;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -12,9 +13,10 @@ using System.Threading.Tasks;
 
 namespace GameMasterHub.Infrastructure.Repositories
 {
-    public class GameRepository(HttpClient httpClient)
+    public class GameRepository(HttpClient httpClient, GameStorage gameStorage)
     {
         private readonly HttpClient _httpClient = httpClient;
+        private readonly GameStorage _gameStorage = gameStorage;
 
         async public Task<bool> CreateTemplateCharacterAsync(TemplateCharacterModel templateCharacterModel)
         {
@@ -22,14 +24,69 @@ namespace GameMasterHub.Infrastructure.Repositories
             {
                 var request = new CreateCharacterRequest
                 {
-                    Name = templateCharacterModel.Name,
-                    Attributes = templateCharacterModel.Attributes,
-                    Skills = templateCharacterModel.Skills
+                    GameId = templateCharacterModel.GameId,
+                    AttributesWallet = templateCharacterModel.AttributesWallet,
+                    Attributes = templateCharacterModel.Attributes.Select(a => new AttributeDto
+                    {
+                        Name = a.Name,
+                        Type = a.Type
+                    }).ToList(),
+                    Skills = templateCharacterModel.Skills.Select(s => new SkillDto
+                    {
+                        Name = s.Name,
+                        Attribute = s.Attribute.Name
+                    }).ToList()
                 };
                 var json = JsonSerializer.Serialize(request);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync("/template/character/", content);
+                Console.WriteLine(content.ToString());
+
+                var responseJson = @"
+{
+    ""game_id"": 1,
+    ""attributes"": [
+        { ""id"": 1, ""name"": ""strength"", ""type"": ""int"" }, 
+        { ""id"": 2, ""name"": ""intellect"", ""type"": ""int"" }, 
+        { ""id"": 3, ""name"": ""cursed"", ""type"": ""bool"" }
+    ],
+    ""skills"": [
+        { ""name"": ""harizma"", ""attribute"": ""intellect"" }, 
+        { ""name"": ""sex"", ""attribute"": ""strength"" }
+    ]
+}";
+
+                var response = JsonSerializer.Deserialize<CreateCharacterResponse>(responseJson);
+
+                var templateCharacter = new TemplateCharacterModel
+                {
+                    GameId = response.GameId,
+                    Attributes = response.Attributes.Select(a => new AttributeModel
+                    {
+                        Id = a.Id,
+                        Name = a.Name,
+                        Type = a.Type
+                    }).ToList(),
+                    Skills = response.Skills.Select(s => new SkillModel
+                    {
+                        Name = s.Name,
+                        Attribute = response.Attributes
+                            .Where(a => a.Name == s.Attribute)
+                            .Select(a => new AttributeModel
+                            {
+                                Id = a.Id,
+                                Name = a.Name,
+                                Type = a.Type
+                            })
+                            .FirstOrDefault()
+                    }).ToList()
+                };
+
+                _gameStorage.Set(templateCharacter);
+
+                return true;
+
+                /*var response = await _httpClient.PostAsync("/game/stats/", content);
 
 
                 if (response?.StatusCode == HttpStatusCode.OK)
@@ -40,7 +97,7 @@ namespace GameMasterHub.Infrastructure.Repositories
                 {
                     Console.WriteLine("Failed to CreateCharacterAsync.");
                     return false;
-                }
+                }*/
             }
             catch (Exception ex)
             {
@@ -51,57 +108,22 @@ namespace GameMasterHub.Infrastructure.Repositories
 
         public async Task<List<TemplateCharacterModel>> GetTemplatesCharactersAsync()
         {
-            var mockData = new List<TemplateCharacterModel>
-            {
-                new TemplateCharacterModel
-                {
-                    Id = 1,
-                    Name = "Warrior",
-                    Attributes = new List<string>
-                    {
-                        "Strength",
-                        "Endurance"
-                    },
-                    Skills = new List<string>
-                    {
-                        "Swordsmanship",
-                        "Shield Defense"
-                    }
-                },
-                new TemplateCharacterModel
-                {
-                    Id = 2,
-                    Name = "Mage",
-                    Attributes = new List<string>
-                    {
-                        "Intelligence",
-                        "Wisdom"
-                    },
-                    Skills = new List<string>
-                    {
-                        "Spellcasting",
-                        "Alchemy"
-                    }
-                },
-                new TemplateCharacterModel
-                {
-                    Id = 3,
-                    Name = "Rogue",
-                    Attributes = new List<string>
-                    {
-                        "Dexterity",
-                        "Agility"
-                    },
-                    Skills = new List<string>
-                    {
-                        "Stealth",
-                        "Lockpicking"
-                    }
-                }
-            };
-
-            return mockData;
+            throw new NotImplementedException();
         }
 
+        public int GetGameId()
+        {
+            return _gameStorage.GameId;
+        }
+
+        public IObservable<TemplateCharacterModel> WatchGame()
+        {
+            return _gameStorage.Watch();
+        }
+
+        public void ClearStorage()
+        {
+            _gameStorage.Clear();
+        }
     }
 }

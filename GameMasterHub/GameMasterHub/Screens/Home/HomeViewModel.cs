@@ -88,7 +88,7 @@ namespace GameMasterHub.Screens.Home
 
         public void NavigateToCreateTemplateCharacter()
         {
-            CurrentView = new CreateTemplateCharacterViewModel();
+            CurrentView = new CreateTemplateCharacterViewModel(_gameRepository);
             UpdateBackButtonVisibility();
         }
 

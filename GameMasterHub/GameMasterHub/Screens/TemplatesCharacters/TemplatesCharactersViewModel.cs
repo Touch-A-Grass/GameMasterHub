@@ -39,7 +39,7 @@ namespace GameMasterHub.Screens.TemplatesCharacters
 
         private async void GetTemplatesCharacters()
         {
-            var templates = await _gameRepository.GetTemplatesCharactersAsync();
+            /*var templates = await _gameRepository.GetTemplatesCharactersAsync();
 
             Templates?.Clear();
 
@@ -52,7 +52,7 @@ namespace GameMasterHub.Screens.TemplatesCharacters
                     Attributes = string.Join(", ", template.Attributes.ToArray()),
                     Skills = string.Join(", ", template.Skills.ToArray())
                 });
-            }
+            }*/
         }
 
         public void NavigateToCreateTemplateCharacter()
