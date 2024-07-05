@@ -2,7 +2,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:progRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="GameMasterHub.Screens.CreateLobby.CreateLobbyView">
-    <TextBlock Text="Welcome to CREATE LOBBY!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+             x:Class="GameMasterHub.Screens.CreateLobby.CreateLobbyView"
+             xmlns:cl="clr-namespace:GameMasterHub.Screens.CreateLobby"
+             x:DataType="cl:CreateLobbyViewModel">
+    <StackPanel>
+        <progRing:ProgressRing Width="80"
+                               Height="80"
+                               IsActive="{Binding IsLoading}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="{DynamicResource AccentButtonBackground}" />
+        <TextBlock Text="Welcome to CREATE LOBBY!" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   IsVisible="{Binding !IsLoading}" />
+        <Button Content="{materialIcons:MaterialIconExt Kind=Add}"
+                Command="{Binding NavigateToLobbyCommand}"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Background="{DynamicResource AccentButtonBackground}" Height="48" Width="48" Margin="10"
+                IsVisible="{Binding !IsLoading}" />
+    </StackPanel>
 </UserControl>

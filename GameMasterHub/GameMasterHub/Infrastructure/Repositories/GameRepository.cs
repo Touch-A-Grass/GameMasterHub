@@ -108,6 +108,7 @@ namespace GameMasterHub.Infrastructure.Repositories
 
         public async Task<bool> CreateGame(string gameName)
         {
+            return true;
             try
             {
                 var registerRequest = new CreateGameRequest

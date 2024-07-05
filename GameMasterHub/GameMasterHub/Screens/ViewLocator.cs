@@ -6,6 +6,7 @@ using GameMasterHub.Screens.CreateGame;
 using GameMasterHub.Screens.CreateLobby;
 using GameMasterHub.Screens.CreateTemplateCharacter;
 using GameMasterHub.Screens.Home;
+using GameMasterHub.Screens.Lobby;
 using GameMasterHub.Screens.TemplatesCharacters;
 using GameMasterHub.ViewModels;
 using ReactiveUI;
@@ -19,7 +20,8 @@ public class ViewLocator : IViewLocator
         AuthViewModel context => new AuthView { DataContext = context },
         HomeViewModel context => new HomeView { DataContext = context },
         CreateLobbyViewModel context => new CreateLobbyView {DataContext = context},
-        CreateGameViewModel context => new CreateGameView() {DataContext = context},
+        LobbyViewModel context => new LobbyView {DataContext = context},
+        CreateGameViewModel context => new CreateGameView {DataContext = context},
         TemplatesCharactersViewModel context => new TemplatesCharactersView {DataContext = context},
         CreateTemplateCharacterViewModel context => new CreateTemplateCharacterView {DataContext = context},
         _ => throw new ArgumentOutOfRangeException(nameof(viewModel))

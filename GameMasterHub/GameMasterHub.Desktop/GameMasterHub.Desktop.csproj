@@ -19,9 +19,11 @@
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.6" />
         <PackageReference Include="Material.Icons.Avalonia" Version="2.1.10" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.0-preview.5.24306.11" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-preview.5.24306.7" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0-preview.5.24306.7" />
         <PackageReference Include="System.Reactive" Version="6.0.1" />
+        <PackageReference Include="ZXing.Net.Bindings.CoreCompat.System.Drawing" Version="0.16.8-beta" />
     </ItemGroup>
 
     <ItemGroup>

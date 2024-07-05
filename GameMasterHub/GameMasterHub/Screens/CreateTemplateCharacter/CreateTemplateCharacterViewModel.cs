@@ -28,12 +28,6 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
             get => _attributes;
             set
             {
-                if (_attributes != null)
-                {
-                    _attributes.CollectionChanged -= AttributesCollectionChanged;
-                    UnsubscribeFromAttributes(_attributes); 
-                }
-
                 this.RaiseAndSetIfChanged(ref _attributes, value);
 
                 if (_attributes != null)
@@ -237,17 +231,17 @@ namespace GameMasterHub.Screens.CreateTemplateCharacter
 
         private void DeleteAttribute(AttributeTemplate attribute)
         {
-            Attributes?.Remove(attribute);
+            Attributes.Remove(attribute);
         }
 
         private void AddSkill()
         {
-            Skills?.Add(new SkillTemplate());
+            Skills.Add(new SkillTemplate());
         }
 
         private void DeleteSkill(SkillTemplate skill)
         {
-            Skills?.Remove(skill);
+            Skills.Remove(skill);
         }
     }
 

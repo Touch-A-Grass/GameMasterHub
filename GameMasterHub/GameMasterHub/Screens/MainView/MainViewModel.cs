@@ -14,12 +14,14 @@ namespace GameMasterHub.Screens.MainView
     {
         private readonly AuthRepository _authRepository;
         private readonly GameRepository _gameRepository;
+        private readonly LobbyRepository _lobbyRepository;
         public RoutingState Router { get; } = new RoutingState();
 
-        public MainViewModel(AuthRepository authRepository, GameRepository gameRepository, HttpClient _httpClient)
+        public MainViewModel(AuthRepository authRepository, GameRepository gameRepository, LobbyRepository lobbyRepository, HttpClient _httpClient)
         {
             _authRepository = authRepository;
             _gameRepository = gameRepository;
+            _lobbyRepository = lobbyRepository;
             Router.Navigate.Execute(new AuthViewModel(this, _authRepository));
             _authRepository.WatchToken().Subscribe(token =>
                 {
@@ -43,7 +45,7 @@ namespace GameMasterHub.Screens.MainView
         
         private IObservable<IRoutableViewModel> NavigateToHome()
         {
-            return Router.Navigate.Execute(new HomeViewModel(this, _authRepository, _gameRepository));
+            return Router.Navigate.Execute(new HomeViewModel(this, _authRepository, _gameRepository, _lobbyRepository));
         }
 
         public ReactiveCommand<Unit, IRoutableViewModel> ClickedNavigateToAuth =>

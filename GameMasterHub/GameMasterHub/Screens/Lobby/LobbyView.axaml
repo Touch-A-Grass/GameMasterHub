@@ -1,0 +1,133 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GameMasterHub.Screens.Lobby.LobbyView"
+             xmlns:l="clr-namespace:GameMasterHub.Screens.Lobby"
+             xmlns:gameMasterHub="clr-namespace:GameMasterHub"
+             x:DataType="l:LobbyViewModel">
+
+
+    <Grid ColumnDefinitions="200,*,300" RowDefinitions="*">
+
+        <!-- Left Panel: User List -->
+        <Grid Grid.Column="0" RowDefinitions="Auto,*">
+            <TextBlock Text="Users" FontWeight="Bold" Margin="10" HorizontalAlignment="Center" />
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Users}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button
+                                Command="{Binding $parent[ItemsControl].((l:LobbyViewModel)DataContext).ChooseUserCommand}"
+                                Content="{Binding Name, Mode=TwoWay}" IsEnabled="{Binding IsEnabled}" Margin="5" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <Button Grid.Row="2" Content="Show QR Code" Command="{Binding ExpandQrCodeCommand}"
+                    VerticalAlignment="Bottom"
+                    Margin="10">
+                <Button.Flyout>
+                    <Flyout Placement="Bottom">
+                        <Image Source="{Binding QRCodeImage}" Width="300" Height="300" />
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
+
+        <!-- Middle Panel: Two Grids -->
+        <Grid Grid.Column="1" RowDefinitions="*, Auto, *" Background="#2c2c2c">
+            <!-- Первый ряд -->
+            <Grid Grid.Row="0" RowDefinitions="Auto, *, Auto">
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Dices" FontWeight="Bold" FontSize="18" Margin="0 0 0 5"
+                               HorizontalAlignment="Center" Grid.Column="0" />
+                    <Button Content="{materialIcons:MaterialIconExt Kind=Add}"
+                            Command="{Binding AddDiceCommand}"
+                            Margin="0 0 0 5" Height="36" Width="36" HorizontalAlignment="Right" Grid.Column="1" />
+                </Grid>
+
+                <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0 5" Grid.Row="1">
+                    <ItemsControl ItemsSource="{Binding Dices}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0 5" HorizontalAlignment="Center">
+                                    <Button
+                                        Command="{Binding $parent[ItemsControl].((l:LobbyViewModel)DataContext).DeleteDiceCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Content="{materialIcons:MaterialIconExt Kind=Delete}"
+                                        Width="24" Height="24" Margin="5" />
+                                    <TextBox Text="{Binding Value, Mode=TwoWay}" Width="400"
+                                             FontSize="16" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <Button Content="{materialIcons:MaterialIconExt Kind=Casino}" Command="{Binding RollDicesCommand}"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Background="{DynamicResource AccentButtonBackground}" Height="48" Width="48" Margin="10"
+                        Grid.Row="3" />
+            </Grid>
+
+            <!-- Разделительная линия -->
+            <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,0,1" Margin="0 0 0 12" />
+
+            <!-- Второй ряд -->
+            <TextBlock Text="{Binding RollResult}" TextAlignment="Center" HorizontalAlignment="Center"
+                       VerticalAlignment="Center" Grid.Row="2" />
+        </Grid>
+
+
+        <!-- Right Panel: Chat -->
+        <Grid Grid.Column="2" RowDefinitions="Auto,*">
+            <TextBlock Text="Chat" FontWeight="Bold" Margin="10" HorizontalAlignment="Center" />
+
+            <Grid Grid.Row="1" RowDefinitions="*,Auto">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Messages}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="Gray" Margin="5" Padding="10"
+                                        HorizontalAlignment="{Binding IsMine, Converter={StaticResource MessageHorizontalAlignmentConverter}}">
+                                    <TextBlock Text="{Binding Text}"
+                                               TextAlignment="{Binding IsMine, Converter={StaticResource MessageTextAlignmentConverter}}" />
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <Grid Grid.Row="1" VerticalAlignment="Bottom" Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Text="{Binding MessageText}" Grid.Column="0" HorizontalAlignment="Stretch" Margin="0,0,10,0" />
+                    <Button Grid.Column="1" Content="{materialIcons:MaterialIconExt Kind=Send}"
+                            HorizontalAlignment="Right" Margin="0,0,0,0"
+                            Command="{Binding SendMessageCommand}"/>
+                </Grid>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</UserControl>

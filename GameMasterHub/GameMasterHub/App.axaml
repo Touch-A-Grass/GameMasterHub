@@ -8,6 +8,8 @@
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
     <Application.Resources>
         <local:ViewLocator x:Key="ViewLocator" />
+        <local:MessageHorizontalAlignmentConverter x:Key="MessageHorizontalAlignmentConverter" />   
+        <local:MessageTextAlignmentConverter x:Key="MessageTextAlignmentConverter" />   
     </Application.Resources>
 
     <Application.Styles>

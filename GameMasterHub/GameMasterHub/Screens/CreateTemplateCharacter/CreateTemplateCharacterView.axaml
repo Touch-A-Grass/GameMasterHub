@@ -39,7 +39,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- Attributes Column -->
-            <Grid Grid.Column="0" RowDefinitions="Auto,Auto,*" Margin="10">
+            <Grid Grid.Column="0" RowDefinitions="Auto,Auto,*, Auto" Margin="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />

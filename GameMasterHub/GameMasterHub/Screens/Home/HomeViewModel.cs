@@ -4,6 +4,7 @@ using GameMasterHub.Infrastructure.Storage;
 using GameMasterHub.Screens.CreateGame;
 using GameMasterHub.Screens.CreateLobby;
 using GameMasterHub.Screens.CreateTemplateCharacter;
+using GameMasterHub.Screens.Lobby;
 using GameMasterHub.Screens.MainView;
 using GameMasterHub.Screens.TemplatesCharacters;
 using GameMasterHub.ViewModels;
@@ -22,6 +23,7 @@ namespace GameMasterHub.Screens.Home
         public string? UrlPathSegment { get; } = "home";
         public IScreen HostScreen { get; }
         private readonly AuthRepository _authRepository;
+        private readonly LobbyRepository _lobbyRepository;
 
         private Stack<ViewModelBase> _stackViewModels = new Stack<ViewModelBase>();
 
@@ -56,10 +58,11 @@ namespace GameMasterHub.Screens.Home
             set => this.RaiseAndSetIfChanged(ref _backButtonVisible, value);
         }
 
-        public HomeViewModel(IScreen screen, AuthRepository authRepository, GameRepository gameRepository)
+        public HomeViewModel(IScreen screen, AuthRepository authRepository, GameRepository gameRepository, LobbyRepository lobbyRepository)
         {
             _gameRepository = gameRepository;
             _authRepository = authRepository;
+            _lobbyRepository = lobbyRepository;
             SwitchCurrentViewModel("CreateLobby");
 
             BackCommand = ReactiveCommand.Create(Back);
@@ -73,14 +76,13 @@ namespace GameMasterHub.Screens.Home
             switch (tag)
             {
                 case "CreateLobby":
-                    viewModel = new CreateLobbyViewModel();
+                    viewModel = new CreateLobbyViewModel(this, _lobbyRepository);
                     break;
                 case "CreateGame":
-                    // viewModel = new TemplatesCharactersViewModel(this, _gameRepository);
                     viewModel = new CreateGameViewModel(this, _gameRepository);
                     break;
                 default:
-                    viewModel = new CreateLobbyViewModel();
+                    viewModel = new CreateLobbyViewModel(this, _lobbyRepository);
                     break;
             }
             CurrentView = viewModel;
@@ -89,6 +91,12 @@ namespace GameMasterHub.Screens.Home
         public void NavigateToCreateTemplateCharacter()
         {
             CurrentView = new CreateTemplateCharacterViewModel(_gameRepository);
+            UpdateBackButtonVisibility();
+        }
+        
+        public void NavigateToLobby()
+        {
+            CurrentView = new LobbyViewModel(_lobbyRepository);
             UpdateBackButtonVisibility();
         }
 
@@ -113,8 +121,7 @@ namespace GameMasterHub.Screens.Home
             var noBackButtonViews = new List<Type>
             {
                 typeof(CreateLobbyViewModel),
-                typeof(CreateGameViewModel),
-                typeof(CreateLobbyViewModel)
+                typeof(CreateGameViewModel)
             };
 
             BackButtonVisible = _stackViewModels.Count > 1 && !noBackButtonViews.Contains(CurrentView.GetType());
